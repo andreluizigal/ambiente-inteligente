@@ -1,0 +1,16 @@
+syntax = "proto3";
+package mensagem;
+
+message Request {
+    int32 tipo = 2;
+    string nome = 3;
+    optional bool ligado = 4;
+    optional float temperatura = 5;
+    optional int32 volume = 6;
+}
+
+message Response {
+    repeated Request requests = 1;
+}
+
+
