@@ -11,7 +11,7 @@ def main():
 
     requisicao = mensagens_pb2.Request()
     requisicao.tipo = 0
-    requisicao.nome = "testando"
+    requisicao.nome = "inicial"
 
     cliente.sendto(requisicao.SerializeToString(), HOST)
     
@@ -21,16 +21,28 @@ def main():
         resposta = mensagens_pb2.Response()
         resposta.ParseFromString(data)   
         
+        print("\n###########################\n")
 
         print("Escolha um dispositivo:")
         contador = 0
         for x in resposta.requests:
-            print(contador, "-", x.nome)
+            print(contador, "-", x.nome,)
+            contador += 1
 
-        d = int(input("Número: "))
+        d = int(input("Digite o número do dispositivo ou -1 para atualizar a lista): "))
+
+        if d == -1:
+            atualizar = mensagens_pb2.Request()
+            atualizar.tipo = 0
+            atualizar.nome = "inicial"
+            cliente.sendto(atualizar.SerializeToString(), HOST)
+            continue
+
 
         requisicao.Clear()
         requisicao.CopyFrom(resposta.requests[d])
+
+        print("\n###########################\n")
 
         print("Nome:", resposta.requests[d].nome)
         if resposta.requests[d].tipo ==1: 
