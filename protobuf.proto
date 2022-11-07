@@ -1,0 +1,24 @@
+syntax = "proto3";
+package protobuf;
+
+service Turn {
+  rpc TurnOn (Vazio) returns (Status) {}
+
+  rpc TurnOff (Vazio) returns (Status) {}
+}
+
+message Status {
+  bool on = 1;
+}
+
+message Vazio {}
+
+message Request {
+    int32 device = 1;
+    bool on = 2;
+    optional int32 value = 3;
+}
+
+message Response {
+    repeated Request requests = 1;
+}
